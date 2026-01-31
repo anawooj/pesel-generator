@@ -1,0 +1,43 @@
+<html>
+<head>
+    <title>Generator Peseli</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        body{
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .options{
+
+        }
+    </style>
+</head>
+<body>
+<div class="options">
+    <h1>Pesel Generator</h1>
+    <form>
+        <div class="form-div">
+            <label>Data urodzenia
+                <input type="date"></label>
+        </div>
+        <div class="form-div">
+            <label>Płeć
+                <label><input type="radio" name="plec" value="M">M</label>
+                <label><input type="radio" name="plec" value="K">K</label></label>
+        </div>
+
+        <div class="form-div">
+        <label>Ile peseli wygenerować?
+            <input type="number"></label>
+        </div>
+
+        <input type="submit" value="Generuj">
+        <input type="button" value="Wyloguj">
+    </form>
+
+</div>
+</body>
+</html>
