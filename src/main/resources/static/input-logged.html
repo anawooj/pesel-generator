@@ -16,34 +16,28 @@
     </style>
 </head>
 <body>
-    <div class="options">
-        <h1>Pesel Generator</h1>
-        <form>
-            <div class="form-div">
+<div class="options">
+    <h1>Pesel Generator</h1>
+    <form method="post">
+        <div class="form-div">
             <label>Data urodzenia
                 <input type="date"></label>
-            </div>
-            <div class="form-div">
+        </div>
+        <div class="form-div">
             <label>Płeć
                 <label><input type="radio" name="plec" value="M">M</label>
                 <label><input type="radio" name="plec" value="K">K</label></label>
-            </div>
+        </div>
 
-            <input type="submit" value="Generuj">
+        <div class="form-div">
+        <label>Ile peseli wygenerować?
+            <input type="number"></label>
+        </div>
 
-            <p>Tylko dla zalogowanych użytkowników dostępne są funckje Premium</p>
-            <ul>
-                <li>generowanie wielu peseli na raz</li>
-                <li>pobranie wyniku w formacie plain</li>
-                <li>wysyłanie wyniku na maila</li>
-            </ul>
+        <input type="submit" value="Generuj">
+        <input type="button" value="Wyloguj">
+    </form>
 
-            <input type="button" value="Zajerestruj się">
-
-
-
-        </form>
-
-    </div>
+</div>
 </body>
 </html>
