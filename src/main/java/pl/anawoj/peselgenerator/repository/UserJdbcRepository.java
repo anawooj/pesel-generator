@@ -22,10 +22,14 @@ public class UserJdbcRepository {
                 username
         );
 
-        System.out.println(users);
-
         if (users.isEmpty()) return null;
         User u = users.get(0);
+        List<String> roles = jdbcTemplate.query(
+                "SELECT role FROM toik.user_roles WHERE user_id=?",
+                (rs, i) -> rs.getString("role"),
+                u.getId()
+        );
+        u.setRoles(roles);
         return u;
     }
 }

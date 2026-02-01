@@ -10,13 +10,15 @@
         <form th:action="@{/result}" method="get">
 
             <div class="form-div">
-            <label>Data urodzenia
-                <input type="date"></label>
+                <label>Data urodzenia
+                    <input type="date" name="birthDate">
+                </label>
             </div>
+
             <div class="form-div">
-            <label>Płeć
+                <label>Płeć</label>
                 <label><input type="radio" name="plec" value="M"> M</label>
-                <label><input type="radio" name="plec" value="K"> K</label></label>
+                <label><input type="radio" name="plec" value="K"> K</label>
             </div>
 
             <button type="submit" class="btn btn-primary">Generuj</button>
@@ -30,7 +32,7 @@
                 </ul>
             </div>
 
-            <a th:href="@{/login}" class="btn btn-primary">Zaloguj się</a>
+        <a th:href="@{/login}" class="btn btn-primary">Zaloguj się</a>
         </form>
     </div>
 </body>

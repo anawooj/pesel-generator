@@ -19,11 +19,9 @@
 <div class="options">
     <h1>Pesel Generator</h1>
 
-    <p>Twój wygenerowany pesel to: </p>
+    <p>Twój wygenerowany pesel: <span th:text="${pesels}"></span></p>
 
-    <p class="output-field">00000000000</p>
-
-    <a th:href="@{/login}" class="btn btn-primary">Generuj ponownie</a>
+    <a class="btn btn-primary" onClick="window.location.reload();">Generuj ponownie</a>
     <a th:href="@{/}" class="btn btn-primary">Zmień parametry</a>
 
 </div>

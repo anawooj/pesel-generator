@@ -2,32 +2,21 @@
 <head>
     <title>Generator Peseli</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <style>
-        body{
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-        }
-        .options{
-
-        }
-    </style>
+    <link rel="stylesheet" href="css/output.css">
 </head>
 <body>
 <div class="options">
     <h1>Pesel Generator</h1>
 
-    <p>Twój wygenerowany pesel to: </p>
-
-    <p class="output-field">00000000000</p>
+    <p>Twój wygenerowany pesel: <span th:text="${pesels}"></span></p>
 
     <a th:href="@{/login}" class="btn btn-primary">Wyślij wynik na maila...</a>
-    <a th:href="@{/login}" class="btn btn-primary">Pobierz wynik</a>
+    <form th:action="@{/download}" method="post">
+        <button type="submit" class="btn btn-primary">Pobierz jako .txt</button>
+    </form>
 
-    <a th:href="@{/login}" class="btn btn-primary">Generuj ponownie</a>
-    <a th:href="@{/input-logged.html}" class="btn btn-primary">Zmień parametry</a>
+    <a class="btn btn-primary" onClick="window.location.reload();">Generuj ponownie</a>
+    <a th:href="@{/}" class="btn btn-primary">Zmień parametry</a>
 
 </div>
 </body>
