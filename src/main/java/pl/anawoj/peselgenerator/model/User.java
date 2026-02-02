@@ -11,13 +11,15 @@ public class User implements UserDetails {
     private final Long id;
     private final String username;
     private final String password;
+    private final String email;
 
     private List<String> roles;
 
-    public User(Long id, String username, String password) {
+    public User(Long id, String username, String password, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     public Long getId() {
@@ -41,6 +43,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override

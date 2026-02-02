@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.anawoj.peselgenerator.model.User;
+import pl.anawoj.peselgenerator.repository.UserJdbcRepository;
+import pl.anawoj.peselgenerator.service.MailService;
 import pl.anawoj.peselgenerator.util.PeselGenerator;
 
 import java.io.IOException;
@@ -21,6 +23,11 @@ import java.util.List;
 
 @Controller
 public class SubsiteController {
+
+    private final MailService mailService;
+    public SubsiteController(MailService mailService) {
+        this.mailService = mailService;
+    }
 
     @GetMapping("/")
     public String homePage(Principal principal, Model model) {
@@ -39,8 +46,20 @@ public class SubsiteController {
         return "input-logged";
     }
 
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String username,
+                               @RequestParam String password,
+                               @RequestParam String email,
+                               Principal principal) {
+
+        if(principal == null) return "register";
+
+        //UserJdbcRepository.registerUser(username, password, email);
+        return "redirect:/";
+    }
+
     @GetMapping("/result")
-    public String result(
+    public String resultPage(
             @RequestParam String birthDate,
             @RequestParam String plec,
             @RequestParam(defaultValue = "1") int amount,
@@ -90,5 +109,21 @@ public class SubsiteController {
         return ResponseEntity.ok()
                 .header("Content-Disposition", "attachment; filename=pesels.txt")
                 .body(fileBytes);
+    }
+
+    @GetMapping("/send-mail")
+    public String sendMail(Authentication authentication, HttpSession session, Principal principal) {
+
+        if (principal == null) return "redirect:/";
+
+        String username = authentication.getName();
+        List<String> pesels = (List<String>) session.getAttribute("pesels");
+
+        try {
+            mailService.sendPeselsToUser(username, pesels);
+            return "redirect:/?mailSent=true";
+        } catch (Exception e) {
+            return "redirect:/?mailError=true";
+        }
     }
 }

@@ -6,29 +6,33 @@
 </head>
 <body>
 <div class="container">
-    <h1>Zaloguj się</h1>
+    <h1>Zarejestruj się</h1>
 
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/register}" method="post">
 
         <div class="form-div">
             <label>Login
-                <input type="text" name="username">
+                <input type="text" name="username" required>
             </label>
         </div>
 
         <div class="form-div">
             <label>Password
-                <input type="password" name="password">
+                <input type="password" name="password" required>
+            </label>
+        </div>
+
+        <div class="form-div">
+            <label>Email
+                <input type="email" name="email" required>
             </label>
         </div>
 
         <div class="button-menu">
-            <button type="submit" class="btn btn-primary">Zaloguj się</button>
+            <button type="submit" class="btn btn-primary">Zajerestruj się</button>
             <a th:href="@{/}" class="btn btn-primary">Powrót</a>
         </div>
-
     </form>
-
 </div>
 </body>
 </html>

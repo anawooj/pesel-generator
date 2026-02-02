@@ -18,7 +18,7 @@ public class UserJdbcRepository {
         List<User> users = jdbcTemplate.query(
                 "SELECT * FROM toik.users WHERE username=?",
                 (rs, i) -> new User(rs.getLong("id"), rs.getString("username"),
-                        rs.getString("password")),
+                        rs.getString("password"), rs.getString("email")),
                 username
         );
 
@@ -32,4 +32,14 @@ public class UserJdbcRepository {
         u.setRoles(roles);
         return u;
     }
-}
+
+    public void registerUser(String username, String password, String email){
+        String sql = "INSERT INTO toik.users (username, password, email) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, username, password, email);
+    }
+
+    public boolean userExists(String username) {
+        String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, username);
+        return count != null && count > 0; }
+    }
