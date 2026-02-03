@@ -50,15 +50,17 @@ public class SubsiteController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Principal principal, Model model) {
-        if(principal == null) return "login";
-        model.addAttribute("username", principal.getName());
-        return "input-logged";
-    }
+    public String loginPage(Principal principal, Model model, @RequestParam(value = "error", required = false) String error) {
+        if (principal != null) {
+            model.addAttribute("username", principal.getName());
+            return "input-logged";
+        }
 
-    @GetMapping("/register")
-    public String registerPage() {
-        return "register";
+        if (error != null) {
+            model.addAttribute("loginError", "Invalid username or password");
+        }
+
+        return "login";
     }
 
     @PostMapping("/register")
@@ -69,6 +71,22 @@ public class SubsiteController {
 
         if (principal != null) return "redirect:/";
 
+        if (username.length() < 3 || username.length() > 25) {
+            return "redirect:/register?error=usernameLength";
+        }
+
+        if (!username.matches("^[a-zA-Z0-9]+$")) {
+            return "redirect:/register?error=invalidUsernameChars";
+        }
+
+        if (password.length() < 3 || password.length() > 25) {
+            return "redirect:/register?error=passwordLength";
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            return "redirect:/register?error=invalidEmail";
+        }
+
         if (jdbcRepository.userExists(username)) {
             return "redirect:/register?error=userExists";
         }
@@ -77,6 +95,7 @@ public class SubsiteController {
 
         return "redirect:/login?registered=true";
     }
+
 
     @GetMapping("/result")
     public String resultPage(
@@ -116,7 +135,7 @@ public class SubsiteController {
         List<String> pesels = (List<String>) session.getAttribute("pesels");
 
         if (pesels == null || pesels.isEmpty()) {
-            return ResponseEntity.badRequest().body("No PESELs generated yet.".getBytes());
+            return ResponseEntity.badRequest().body("Nie wygenerowano jeszcze peseli.".getBytes());
         }
 
         StringBuilder sb = new StringBuilder();
@@ -127,7 +146,7 @@ public class SubsiteController {
         byte[] fileBytes = sb.toString().getBytes();
 
         return ResponseEntity.ok()
-                .header("Content-Disposition", "attachment; filename=pesels.txt")
+                .header("Content-Disposition", "attachment; filename=pesele.txt")
                 .body(fileBytes);
     }
 

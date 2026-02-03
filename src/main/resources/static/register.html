@@ -38,6 +38,16 @@
         Użytkownik o takiej nazwie już istnieje.
     </div>
 
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        <p th:switch="${param.error}">
+            <span th:case="'usernameLength'">Username must be 3–25 characters.</span>
+            <span th:case="'invalidUsernameChars'">Username may contain only letters and numbers.</span>
+            <span th:case="'passwordLength'">Password must be 3–25 characters.</span>
+            <span th:case="'invalidEmail'">Please enter a valid email address.</span>
+            <span th:case="'userExists'">This username is already taken.</span>
+        </p>
+    </div>
+
 </div>
 </body>
 </html>

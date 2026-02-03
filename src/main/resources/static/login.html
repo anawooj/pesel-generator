@@ -30,6 +30,10 @@
 
     </form>
 
+    <div th:if="${loginError}" class="alert alert-danger" role="alert">
+        <p th:text="${loginError}"></p>
+    </div>
+
 </div>
 </body>
 </html>
