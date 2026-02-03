@@ -13,11 +13,9 @@ public class PeselGenerator {
     public static String generate(LocalDate birthDate, Gender gender) {
         StringBuilder pesel = new StringBuilder();
 
-        // YY
         String year = String.format("%02d", birthDate.getYear() % 100);
         pesel.append(year);
 
-        // MM with century encoding
         int month = birthDate.getMonthValue();
         int yearFull = birthDate.getYear();
 
@@ -32,15 +30,12 @@ public class PeselGenerator {
         }
         pesel.append(String.format("%02d", month));
 
-        // DD
         String day = String.format("%02d", birthDate.getDayOfMonth());
         pesel.append(day);
 
-        // SSS – random, but last digit encodes gender
         int seq = ThreadLocalRandom.current().nextInt(0, 1000); // 000–999
         String seqStr = String.format("%03d", seq);
 
-        // last digit of SSSS (position 10) – gender
         int genderDigit = ThreadLocalRandom.current().nextInt(0, 10);
         if (gender == Gender.MALE && genderDigit % 2 == 0) {
             genderDigit++; // make it odd
@@ -51,7 +46,6 @@ public class PeselGenerator {
         pesel.append(seqStr);
         pesel.append(genderDigit);
 
-        // control digit
         int control = calculateControlDigit(pesel.toString());
         pesel.append(control);
 
@@ -69,15 +63,5 @@ public class PeselGenerator {
 
         int mod = sum % 10;
         return (10 - mod) % 10;
-    }
-
-    // Example usage
-    public static void main(String[] args) {
-        LocalDate birthDate = LocalDate.of(2001, 3, 15);
-        String peselMale = generate(birthDate, Gender.MALE);
-        String peselFemale = generate(birthDate, Gender.FEMALE);
-
-        System.out.println("Male PESEL: " + peselMale);
-        System.out.println("Female PESEL: " + peselFemale);
     }
 }

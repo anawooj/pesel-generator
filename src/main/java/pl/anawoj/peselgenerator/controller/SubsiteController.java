@@ -106,6 +106,17 @@ public class SubsiteController {
             Model model,
             HttpSession session) {
 
+        boolean invalidAmount = false;
+
+        if (amount < 1 || amount > 1000) {
+            invalidAmount = true;
+            amount = 1;
+        }
+
+        if (principal == null) {
+            amount = 1;
+        }
+
         LocalDate date = LocalDate.parse(birthDate);
         PeselGenerator.Gender gender =
                 plec.equals("M") ? PeselGenerator.Gender.MALE : PeselGenerator.Gender.FEMALE;
@@ -117,13 +128,14 @@ public class SubsiteController {
         }
 
         session.setAttribute("pesels", pesels);
-
         model.addAttribute("pesels", pesels);
 
-        if(principal == null) return "output-unlogged";
+        model.addAttribute("invalidAmount", invalidAmount);
 
+        if (principal == null) return "output-unlogged";
         return "output-logged";
     }
+
 
     @PostMapping("/download")
     public ResponseEntity<byte[]> downloadTxt(HttpSession session, Principal principal) {

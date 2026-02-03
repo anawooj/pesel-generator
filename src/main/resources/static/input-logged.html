@@ -48,6 +48,11 @@
     <div th:if="${param.mailError}" class="alert alert-danger">
         Wystąpił błąd podczas wysyłania emaila.
     </div>
+
+    <div th:if="${invalidAmount}" class="alert alert-danger">
+        Podana liczba peseli jest nieprawidłowa. Dozwolone wartości: 1–1000.
+    </div>
+
 </div>
 </body>
 <script>
