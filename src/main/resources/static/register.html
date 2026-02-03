@@ -33,6 +33,11 @@
             <a th:href="@{/}" class="btn btn-primary">Powrót</a>
         </div>
     </form>
+
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        Użytkownik o takiej nazwie już istnieje.
+    </div>
+
 </div>
 </body>
 </html>

@@ -1,6 +1,12 @@
 package pl.anawoj.peselgenerator.controller;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -10,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.filter.OncePerRequestFilter;
 import pl.anawoj.peselgenerator.model.User;
 import pl.anawoj.peselgenerator.repository.UserJdbcRepository;
 import pl.anawoj.peselgenerator.service.MailService;
@@ -25,8 +32,11 @@ import java.util.List;
 public class SubsiteController {
 
     private final MailService mailService;
-    public SubsiteController(MailService mailService) {
+    private final UserJdbcRepository jdbcRepository;
+
+    public SubsiteController(MailService mailService, UserJdbcRepository jdbcRepository, UserJdbcRepository jdbcRepository1) {
         this.mailService = mailService;
+        this.jdbcRepository = jdbcRepository;
     }
 
     @GetMapping("/")
@@ -46,16 +56,26 @@ public class SubsiteController {
         return "input-logged";
     }
 
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";
+    }
+
     @PostMapping("/register")
     public String registerUser(@RequestParam String username,
                                @RequestParam String password,
                                @RequestParam String email,
                                Principal principal) {
 
-        if(principal == null) return "register";
+        if (principal != null) return "redirect:/";
 
-        //UserJdbcRepository.registerUser(username, password, email);
-        return "redirect:/";
+        if (jdbcRepository.userExists(username)) {
+            return "redirect:/register?error=userExists";
+        }
+
+        jdbcRepository.registerUser(username, password, email);
+
+        return "redirect:/login?registered=true";
     }
 
     @GetMapping("/result")
