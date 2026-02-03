@@ -5,15 +5,52 @@ import pl.anawoj.peselgenerator.repository.UserJdbcRepository;
 
 import java.security.Principal;
 
+/**
+ * Serwis odpowiedzialny za obsługę procesu rejestracji użytkowników.
+ *
+ * <p>Serwis wykonuje walidację danych wejściowych (nazwa użytkownika, hasło, e-mail),
+ * sprawdza dostępność nazwy użytkownika oraz zapisuje nowego użytkownika
+ * w bazie danych za pomocą {@link UserJdbcRepository}.
+ *
+ * <p>W przypadku błędów walidacji zwracane są odpowiednie przekierowania
+ * z parametrami informującymi o rodzaju błędu.
+ */
 @Service
 public class RegisterService {
 
+    /** Repozytorium użytkowników wykorzystywane do sprawdzania i zapisu danych. */
     private final UserJdbcRepository jdbcRepository;
 
+    /**
+     * Konstruktor wstrzykujący repozytorium użytkowników.
+     *
+     * @param jdbcRepository repozytorium obsługujące operacje na użytkownikach
+     */
     public RegisterService(UserJdbcRepository jdbcRepository) {
         this.jdbcRepository = jdbcRepository;
     }
 
+    /**
+     * Przeprowadza proces rejestracji użytkownika, obejmujący:
+     * <ul>
+     *     <li>sprawdzenie, czy użytkownik nie jest już zalogowany,</li>
+     *     <li>weryfikację długości nazwy użytkownika,</li>
+     *     <li>weryfikację dozwolonych znaków w nazwie użytkownika,</li>
+     *     <li>weryfikację długości hasła,</li>
+     *     <li>weryfikację poprawności adresu e-mail,</li>
+     *     <li>sprawdzenie, czy nazwa użytkownika nie jest już zajęta,</li>
+     *     <li>zapis nowego użytkownika w bazie danych.</li>
+     * </ul>
+     *
+     * <p>W przypadku błędów walidacji metoda zwraca przekierowanie
+     * na stronę rejestracji z odpowiednim parametrem błędu.
+     *
+     * @param username nazwa użytkownika podana podczas rejestracji
+     * @param password hasło użytkownika
+     * @param email adres e-mail użytkownika
+     * @param principal aktualnie zalogowany użytkownik (jeśli istnieje)
+     * @return przekierowanie na stronę logowania lub stronę rejestracji z błędem
+     */
     public String register(String username, String password, String email, Principal principal) {
 
         if (principal != null) return "redirect:/";
