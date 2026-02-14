@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>Generator Peseli</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Pesel Generator</h1>
+    <p>Zalogowano jako <span th:text="${username}"></span></p>
+
+    <form th:action="@{/result}" method="get">
+
+        <div class="form-div">
+            <label>Data urodzenia
+                <input type="date" name="birthDate" required>
+            </label>
+        </div>
+
+        <div class="form-div">
+            <label>Płeć</label>
+            <label><input type="radio" name="plec" value="M" required> M</label>
+            <label><input type="radio" name="plec" value="K" required> K</label>
+        </div>
+
+
+        <div class="form-div">
+            <label>Ile peseli wygenerować?
+                <input type="number" name="amount" value="1">
+            </label>
+        </div>
+
+        <div class="button-menu">
+            <button type="submit" class="btn btn-primary">Generuj</button>
+        </div>
+    </form>
+
+    <div class="button-menu">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-primary">Wyloguj</button>
+        </form>
+    </div>
+
+    <div th:if="${param.mailSent}" class="alert alert-success">
+        Email został wysłany pomyślnie.
+    </div>
+
+    <div th:if="${param.mailError}" class="alert alert-danger">
+        Wystąpił błąd podczas wysyłania emaila.
+    </div>
+
+    <div th:if="${invalidAmount}" class="alert alert-danger">
+        Podana liczba peseli jest nieprawidłowa. Dozwolone wartości: 1–1000.
+    </div>
+
+</div>
+</body>
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('.alert').forEach(a => a.remove());
+    }, 4000);
+</script>
+
+</html>

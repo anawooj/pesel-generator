@@ -1,0 +1,7 @@
+pl.anawoj.peselgenerator
+pl.anawoj.peselgenerator.config
+pl.anawoj.peselgenerator.controller
+pl.anawoj.peselgenerator.model
+pl.anawoj.peselgenerator.repository
+pl.anawoj.peselgenerator.service
+pl.anawoj.peselgenerator.util

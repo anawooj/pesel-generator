@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Generator Peseli</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Zaloguj się</h1>
+
+    <form th:action="@{/login}" method="post">
+
+        <div class="form-div">
+            <label>Login
+                <input type="text" name="username">
+            </label>
+        </div>
+
+        <div class="form-div">
+            <label>Password
+                <input type="password" name="password">
+            </label>
+        </div>
+
+        <div class="button-menu">
+            <button type="submit" class="btn btn-primary">Zaloguj się</button>
+            <a th:href="@{/register}" class="btn btn-primary">Zajerestruj się</a>
+            <a th:href="@{/}" class="btn btn-primary">Powrót</a>
+        </div>
+
+    </form>
+
+    <div th:if="${loginError}" class="alert alert-danger" role="alert">
+        <p th:text="${loginError}"></p>
+    </div>
+
+</div>
+</body>
+</html>

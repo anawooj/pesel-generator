@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>Generator Peseli</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Zarejestruj się</h1>
+
+    <form th:action="@{/register}" method="post">
+
+        <div class="form-div">
+            <label>Login
+                <input type="text" name="username" required>
+            </label>
+        </div>
+
+        <div class="form-div">
+            <label>Password
+                <input type="password" name="password" required>
+            </label>
+        </div>
+
+        <div class="form-div">
+            <label>Email
+                <input type="email" name="email" required>
+            </label>
+        </div>
+
+        <div class="button-menu">
+            <button type="submit" class="btn btn-primary">Zajerestruj się</button>
+            <a th:href="@{/}" class="btn btn-primary">Powrót</a>
+        </div>
+    </form>
+
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        <p th:switch="${param.error[0]}">
+            <span th:case="'usernameLength'">Login musi mieć 3-25 znaków.</span>
+            <span th:case="'invalidUsernameChars'">Login musi zawierać tylko litery i cyfry.</span>
+            <span th:case="'passwordLength'">Hasło musi mieć 3-25 znaków.</span>
+            <span th:case="'invalidEmail'">Wprowadzono niepoprawny adres.</span>
+            <span th:case="'userExists'">Ten login został już użyty.</span>
+            <span th:case="*">Wystąpił nieznany błąd.</span>
+        </p>
+    </div>
+
+</div>
+</body>
+</html>
